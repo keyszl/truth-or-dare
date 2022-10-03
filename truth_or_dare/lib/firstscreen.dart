@@ -12,25 +12,34 @@ class FirstScreen extends StatelessWidget {
       ),
       body: const Text("Truth or Dare"),
       bottomNavigationBar: Container(
-        height : 30,
+        height: 50,
         decoration: BoxDecoration(
-          color: Colors.pink,
+          color: Colors.pink[50],
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10), 
+            topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            IconButton(onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SecondScreen())
-              );
-            },
-
-            );
+            IconButton(
+              icon: Icon(Icons.home),
+              iconSize: 30,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SecondScreen()));
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.contacts),
+              iconSize: 30,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
           ],
         ),
       ),
