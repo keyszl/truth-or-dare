@@ -8,13 +8,15 @@ class SecondScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Contacts"),
+        backgroundColor: Colors.lightBlue[200],
+        title: const Text("CONTACTS",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       ),
-      body: const Text("Truth or Dare"),
+      body: const Text("..."),
       bottomNavigationBar: Container(
         height: 50,
         decoration: BoxDecoration(
-          color: Colors.pink[20],
+          color: Colors.pink[50],
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
@@ -30,7 +32,7 @@ class SecondScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SecondScreen()));
+                        builder: (context) => const FirstScreen()));
               },
             ),
             IconButton(
@@ -41,7 +43,7 @@ class SecondScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const FirstScreen()));
+                        builder: (context) => const SecondScreen()));
               },
             )
           ],
