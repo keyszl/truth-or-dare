@@ -8,9 +8,13 @@ class FirstScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home Page"),
+        backgroundColor: Colors.lightBlue[200],
+        title: const Text(
+          "HOME",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
       ),
-      body: const Text("Truth or Dare"),
+      body: const Text("..."),
       bottomNavigationBar: Container(
         height: 50,
         decoration: BoxDecoration(
@@ -30,14 +34,18 @@ class FirstScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SecondScreen()));
+                        builder: (context) => const FirstScreen()));
               },
             ),
             IconButton(
               icon: Icon(Icons.contacts),
               iconSize: 30,
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SecondScreen()));
+                //Navigator.pop(context);
               },
             )
           ],
