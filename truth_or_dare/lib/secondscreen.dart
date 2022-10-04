@@ -26,6 +26,7 @@ class SecondScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
+              key: Key('iconbutton3'),
               iconSize: 30,
               icon: Icon(Icons.home),
               onPressed: () {
@@ -36,6 +37,7 @@ class SecondScreen extends StatelessWidget {
               },
             ),
             IconButton(
+              key: Key('iconbutton4'),
               icon: Icon(Icons.contacts),
               iconSize: 30,
               onPressed: () {

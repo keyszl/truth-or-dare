@@ -7,24 +7,33 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:truth_or_dare/main.dart';
+import 'package:truth_or_dare/firstscreen.dart';
+import 'package:truth_or_dare/secondscreen.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  testWidgets('presence of screen1', (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: FirstScreen()));
+    expect(find.byType(FirstScreen), findsOneWidget);
+  });
+  testWidgets('Contacts IconButton on Home screen goes to contacts screen',
+      (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: FirstScreen()));
+    expect(find.byKey(Key('iconbutton1')), findsNWidgets(1));
+    expect(find.byKey(Key('iconbutton2')), findsNWidgets(1));
+    await tester.tap(find.byKey(Key('iconbutton2')));
     await tester.pump();
+    await tester.pump();
+    expect(find.byType(SecondScreen), findsOneWidget);
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('Home IconButton on contact screen goes to home screen',
+      (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: FirstScreen()));
+    expect(find.byKey(Key('iconbutton2')), findsNWidgets(1));
+    await tester.tap(find.byKey(Key('iconbutton2')));
+    await tester.pump();
+    await tester.tap(find.byKey(Key('iconbutton1')));
+    await tester.pump();
+    expect(find.byType(FirstScreen), findsOneWidget);
   });
 }
