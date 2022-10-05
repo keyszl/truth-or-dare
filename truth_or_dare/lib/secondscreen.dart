@@ -40,13 +40,7 @@ class SecondScreen extends StatelessWidget {
               key: Key('iconbutton4'),
               icon: Icon(Icons.contacts),
               iconSize: 30,
-              onPressed: () {
-                //Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SecondScreen()));
-              },
+              onPressed: () {},
             )
           ],
         ),

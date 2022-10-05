@@ -31,12 +31,7 @@ class FirstScreen extends StatelessWidget {
               key: Key('iconbutton1'),
               icon: Icon(Icons.home),
               iconSize: 30,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FirstScreen()));
-              },
+              onPressed: () {},
             ),
             IconButton(
               key: Key('iconbutton2'),
