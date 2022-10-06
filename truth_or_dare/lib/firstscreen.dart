@@ -106,8 +106,10 @@ class _FirstScreenState extends State<FirstScreen> {
               icon: const Icon(Icons.contacts),
               iconSize: 30,
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => SecondScreen(friends: _friends)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SecondScreen(friends: _friends)));
                 //Navigator.pop(context);
               },
             )

@@ -136,7 +136,7 @@ class _SecondScreenState extends State<SecondScreen> {
         height: 50,
         decoration: BoxDecoration(
           color: Colors.pink[50],
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
           ),
@@ -145,17 +145,19 @@ class _SecondScreenState extends State<SecondScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              key: Key('iconbutton3'),
+              key: const Key('iconbutton3'),
               iconSize: 30,
-              icon: Icon(Icons.home),
+              icon: const Icon(Icons.home),
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const FirstScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FirstScreen()));
               },
             ),
             IconButton(
-              key: Key('iconbutton4'),
-              icon: Icon(Icons.contacts),
+              key: const Key('iconbutton4'),
+              icon: const Icon(Icons.contacts),
               iconSize: 30,
               onPressed: () {},
             )
