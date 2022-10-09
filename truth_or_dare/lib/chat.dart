@@ -48,7 +48,22 @@ class _ChatScreenState extends State<ChatScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Expanded(child: widget.friend!.bubble_history()),
-          MessageBar(onSend: (_) => send(_)),
+          MessageBar(
+            onSend: (_) => send(_),
+            actions: [
+              Padding(
+                padding: EdgeInsets.only(left: 0, right: 8),
+                child: InkWell(
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.lightBlue,
+                    size: 24,
+                  ),
+                  onTap: () {},
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
