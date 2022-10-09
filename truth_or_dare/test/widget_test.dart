@@ -8,32 +8,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:truth_or_dare/firstscreen.dart';
+import 'package:truth_or_dare/main.dart';
 import 'package:truth_or_dare/secondscreen.dart';
 
 void main() {
   testWidgets('presence of screen1', (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home: FirstScreen()));
-    expect(find.byType(FirstScreen), findsOneWidget);
+    await tester.pumpWidget(const MaterialApp(home: MainScreen()));
+    expect(find.byType(MainScreen), findsOneWidget);
   });
   testWidgets('Contacts IconButton on Home screen goes to contacts screen',
       (tester) async {
-    await tester.pumpWidget(const MaterialApp(home: FirstScreen()));
+    await tester.pumpWidget(const MaterialApp(home: MainScreen()));
     expect(find.byKey(Key('iconbutton1')), findsNWidgets(1));
     expect(find.byKey(Key('iconbutton2')), findsNWidgets(1));
     await tester.tap(find.byKey(Key('iconbutton2')));
     await tester.pump();
     await tester.pump();
-    expect(find.byType(SecondScreen), findsOneWidget);
+    expect(find.byType(ContactsScreen), findsOneWidget);
   });
 
   testWidgets('Home IconButton on contact screen goes to home screen',
       (tester) async {
-    await tester.pumpWidget(const MaterialApp(home: FirstScreen()));
+    await tester.pumpWidget(const MaterialApp(home: MainScreen()));
     expect(find.byKey(Key('iconbutton2')), findsNWidgets(1));
     await tester.tap(find.byKey(Key('iconbutton2')));
     await tester.pump();
     await tester.tap(find.byKey(Key('iconbutton1')));
     await tester.pump();
-    expect(find.byType(FirstScreen), findsOneWidget);
+    expect(find.byType(MainScreen), findsOneWidget);
   });
 }

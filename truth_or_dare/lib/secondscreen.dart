@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'firstscreen.dart';
 
 import 'package:truth_or_dare/friends_data.dart';
 import 'package:truth_or_dare/text_widgets.dart';
 import 'package:truth_or_dare/chat.dart';
 import 'package:truth_or_dare/list_items.dart';
 
-class SecondScreen extends StatefulWidget {
-  SecondScreen({super.key, required this.friends});
+class ContactsScreen extends StatefulWidget {
+  ContactsScreen({super.key, required this.friends});
 
   Friends? friends;
 
-  _SecondScreenState createState() => _SecondScreenState();
+  _ContactsScreenState createState() => _ContactsScreenState();
 }
 
-class _SecondScreenState extends State<SecondScreen> {
+class _ContactsScreenState extends State<ContactsScreen> {
   String? _ipaddress = "Loading...";
   late Friends _friends;
   late List<DropdownMenuItem<String>> _friendList;
@@ -107,62 +106,29 @@ class _SecondScreenState extends State<SecondScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.lightBlue[200],
-        title: const Text("CONTACTS",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-      ),
-      body: Center(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          children: _friends.map((name) {
-            return FriendListItem(
-              friend: _friends.getFriend(name)!,
-              onListTapped: _handleChat,
-              onListEdited: _handleEditFriend,
-            );
-          }).toList(),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _displayTextInputDialog(context);
-        },
-        tooltip: 'Add Friend',
-        child: const Icon(Icons.add),
-      ),
-      bottomNavigationBar: Container(
-        height: 50,
-        decoration: BoxDecoration(
-          color: Colors.pink[50],
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: () {
+              _displayTextInputDialog(context);
+            },
+            tooltip: 'Add Friend',
+            child: const Icon(Icons.add),
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              key: const Key('iconbutton3'),
-              iconSize: 30,
-              icon: const Icon(Icons.home),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FirstScreen()));
-              },
-            ),
-            IconButton(
-              key: const Key('iconbutton4'),
-              icon: const Icon(Icons.contacts),
-              iconSize: 30,
-              onPressed: () {},
-            )
-          ],
-        ),
+          Expanded(
+              child: ListView(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            children: _friends.map((name) {
+              return FriendListItem(
+                friend: _friends.getFriend(name)!,
+                onListTapped: _handleChat,
+                onListEdited: _handleEditFriend,
+              );
+            }).toList(),
+          ))
+        ],
       ),
     );
   }
