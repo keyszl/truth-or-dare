@@ -12,6 +12,16 @@ import 'package:network_info_plus/network_info_plus.dart';
 import 'package:truth_or_dare/friends_data.dart';
 import 'globals.dart' as globals;
 import 'package:path/path.dart' as p;
+import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
+
+Future<String> loadAssetTruths() async {
+  return await rootBundle.loadString('assets/truths.txt');
+}
+
+Future<String> loadAssetDares() async {
+  return await rootBundle.loadString('assets/dares.txt');
+}
 
 class TruthDareScreen extends StatefulWidget {
   TruthDareScreen({super.key, required this.friends, required this.ipAddr});
@@ -34,28 +44,33 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
 
   //https://api.flutter.dev/flutter/dart-io/File-class.html - how files work
   void _getPrompt(String promptType) async {
-    var filePath = p.join(Directory.current.path, 'dares.txt');
+    //var filePath = p.join(Directory.current.path, 'dares.txt');
+
+    //if (promptType == "truth") {
+    //filePath = p.join(Directory.current.path, 'truths.txt');
+    //}
+
+    var contents = "";
 
     if (promptType == "truth") {
-      filePath = p.join(Directory.current.path, 'lib', 'truths.txt');
+      contents = await loadAssetTruths();
+    } else {
+      contents = await loadAssetDares();
     }
+    var lines = contents.split(',');
+    print(lines[0]);
 
-    File file = File(filePath);
+    //File file = File(filePath);
 
-    Stream<String> lines = file
-        .openRead()
-        .transform(utf8.decoder) // Decode bytes to UTF-8.
-        .transform(LineSplitter()); // Convert stream to individual lines.
+    //Stream<String> lines = file
+    //  .openRead()
+    //.transform(utf8.decoder) // Decode bytes to UTF-8.
+    //.transform(LineSplitter()); // Convert stream to individual lines.
 
     Random random = new Random();
-    int length = 0;
-    await for (var line in lines) {
-      length += 1;
-    }
 
-    int rint = random.nextInt(length);
-    print(rint);
-    globals.promptText = lines.elementAt(rint) as String;
+    int rint = random.nextInt(lines.length);
+    globals.promptText = lines.elementAt(rint);
   }
 
   Widget _buildPopupDialog(BuildContext context) {
@@ -135,7 +150,7 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
                   context: context,
                   builder: (BuildContext context) =>
                       _buildPopupDialog(context));
-              _getPrompt("truth");
+              _getPrompt("dare");
             },
             child: const Text('DARE'),
           ),
