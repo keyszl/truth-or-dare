@@ -111,12 +111,14 @@ class _MainScreenState extends State<MainScreen> {
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   icon: Icon(
+                    key: const Key('iconhome'),
                     Icons.home,
                     color: Colors.pink[50],
                   ),
                   label: "Truths/Dares"),
               BottomNavigationBarItem(
                   icon: Icon(
+                    key: const Key('iconcontacts'),
                     Icons.contacts,
                     color: Colors.pink[50],
                   ),
