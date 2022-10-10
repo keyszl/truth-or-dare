@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:convert';
+
 import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -40,11 +43,13 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   // Code here written with help from: https://www.youtube.com/watch?v=Z_UCTPpgKWI&ab_channel=EffortlessCodeLearning
+  // and: https://stackoverflow.com/questions/47027418/how-to-send-image-through-post-using-json-in-flutter
   void pickMedia(ImageSource source) async {
-    XFile? file = await ImagePicker().pickImage(source: source);
-    if (file != null) {
-      imagePath = file.path;
-      setState(() {});
+    XFile? xf = await ImagePicker().pickImage(source: source);
+    if (xf != null) {
+      File imageFile = File(xf.path.toString());
+      List<int> imageBytes = imageFile.readAsBytesSync();
+      send(base64Encode(imageBytes));
     }
   }
 
