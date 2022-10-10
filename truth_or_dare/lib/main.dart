@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:truth_or_dare/firstscreen.dart';
 import 'package:truth_or_dare/secondscreen.dart';
-import 'firstscreen.dart';
 import 'package:truth_or_dare/friends_data.dart';
 
 import 'dart:async';
@@ -43,7 +43,10 @@ class _MainScreenState extends State<MainScreen> {
     _setupServer();
     _findIPAddress();
     pages = [
-      TruthDareScreen(friends: _friends),
+      TruthDareScreen(
+        friends: _friends,
+        ipAddr: _ipaddress,
+      ),
       ContactsScreen(friends: _friends)
     ];
   }
@@ -99,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
         appBar: AppBar(
           backgroundColor: Colors.lightBlue[190],
           title: const Text(
-            "HOME",
+            "TRUTH OR DARE",
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),

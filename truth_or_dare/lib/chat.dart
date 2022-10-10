@@ -1,7 +1,6 @@
 import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:flutter/material.dart';
-import 'package:truth_or_dare/text_widgets.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'friends_data.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -14,6 +13,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  String? imagePath;
+
   void initState() {
     super.initState();
     widget.friend!.addListener(update);
@@ -38,6 +39,15 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  // Code here written with help from: https://www.youtube.com/watch?v=Z_UCTPpgKWI&ab_channel=EffortlessCodeLearning
+  void pickMedia(ImageSource source) async {
+    XFile? file = await ImagePicker().pickImage(source: source);
+    if (file != null) {
+      imagePath = file.path;
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,15 +61,27 @@ class _ChatScreenState extends State<ChatScreen> {
           MessageBar(
             onSend: (_) => send(_),
             actions: [
+              InkWell(
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.black,
+                  size: 24,
+                ),
+                onTap: () {
+                  pickMedia(ImageSource.gallery);
+                },
+              ),
               Padding(
-                padding: EdgeInsets.only(left: 0, right: 8),
+                padding: const EdgeInsets.only(left: 8, right: 8),
                 child: InkWell(
-                  child: Icon(
+                  child: const Icon(
                     Icons.camera_alt,
                     color: Colors.lightBlue,
                     size: 24,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    pickMedia(ImageSource.camera);
+                  },
                 ),
               ),
             ],
