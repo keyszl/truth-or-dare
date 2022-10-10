@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:truth_or_dare/friends_data.dart';
 
 class TruthDareScreen extends StatefulWidget {
-  TruthDareScreen({super.key, required this.friends});
+  TruthDareScreen({super.key, required this.friends, required this.ipAddr});
 
   Friends? friends;
+  String? ipAddr;
 
   @override
   _TruthDareScreenState createState() => _TruthDareScreenState();
@@ -13,9 +14,11 @@ class TruthDareScreen extends StatefulWidget {
 
 class _TruthDareScreenState extends State<TruthDareScreen> {
   late Friends _friends;
+  late String _ipAddr;
 
   void initState() {
     _friends = widget.friends!;
+    _ipAddr = widget.ipAddr!;
   }
 
   @override
@@ -67,7 +70,8 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
             },
             child: const Text('DARE'),
           ),
-        )
+        ),
+        Padding(padding: const EdgeInsets.only(top: 35), child: Text(_ipAddr)),
       ],
     ));
     //Text(_ipaddress!, textAlign: TextAlign.center),
