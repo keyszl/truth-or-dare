@@ -107,7 +107,7 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
           width: 180,
           child: TextButton(
             // TRUTH BUTTON
-            key: const Key("Truth Button"),
+            key: const Key("TruthButton"),
             style: TextButton.styleFrom(
               backgroundColor: Color.fromARGB(255, 175, 219, 237),
               padding: const EdgeInsets.all(16.0),
@@ -134,7 +134,7 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
           width: 180,
           child: TextButton(
             //DARE BUTTON
-            key: const Key("Dare Button"),
+            key: const Key("DareButton"),
             style: TextButton.styleFrom(
               backgroundColor: Color.fromARGB(255, 175, 219, 237),
               padding: const EdgeInsets.all(16.0),

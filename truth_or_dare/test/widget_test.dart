@@ -16,6 +16,7 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: MainScreen()));
     expect(find.byType(MainScreen), findsOneWidget);
   });
+
   testWidgets(
       'Presence of both icons on the botton bar and navigation to second screen ',
       (tester) async {
@@ -29,14 +30,17 @@ void main() {
     expect(find.byType(MainScreen), findsOneWidget);
   });
 
-  //   testWidgets('Contacts IconButton on Home screen goes to contacts screen',
-  //     (tester) async {
-  //   await tester.pumpWidget(const MaterialApp(home: MainScreen()));
-  //   expect(find.byKey(Key('iconbutton1')), findsNWidgets(1));
-  //   expect(find.byKey(Key('iconbutton2')), findsNWidgets(1));
-  //   await tester.tap(find.byKey(Key('iconbutton2')));
-  //   await tester.pump();
-  //   await tester.pump();
-  //   expect(find.byType(ContactsScreen), findsOneWidget);
-  // });
+  testWidgets('Truth button and display of truth dialogue', (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: MainScreen()));
+    expect(find.byKey(const Key('TruthButton')), findsNWidgets(1));
+    //await tester.tap(find.byKey(Key('TruthButton')));
+    //await tester.pump();
+    //await tester.pump();
+    //expect(find.byType(ContactsScreen), findsOneWidget);
+  });
+
+  testWidgets('Dare button and display of truth dialogue', (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: MainScreen()));
+    expect(find.byKey(const Key('DareButton')), findsNWidgets(1));
+  });
 }
