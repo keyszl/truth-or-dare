@@ -71,6 +71,32 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
 
     int rint = random.nextInt(lines.length);
     globals.promptText = lines.elementAt(rint);
+    globals.contentType = promptType;
+  }
+
+  _getWidget() {
+    //selection of type of widget based on truth or dare
+    if (globals.contentType == "truth") {
+      return const TextField(
+        key: Key("TruthText"),
+        decoration: InputDecoration(hintText: "Type your Truth Here"),
+      );
+    } else {
+      return Row(children: <Widget>[
+        TextButton(
+            key: Key("DidDareButton"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("I did my dare")),
+        TextButton(
+            key: Key("DidNotDoDareButton"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("I didn't do my dare"))
+      ]);
+    }
   }
 
   Widget _buildPopupDialog(BuildContext context) {
@@ -92,6 +118,7 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
           //textColor: Theme.of(context).primaryColor,
           child: const Text('Close'),
         ),
+        _getWidget() //adds a widget at the bottom of the dialog based on truth/dare
       ],
     );
   }
