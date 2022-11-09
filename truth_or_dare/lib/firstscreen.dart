@@ -67,24 +67,25 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
     //.transform(utf8.decoder) // Decode bytes to UTF-8.
     //.transform(LineSplitter()); // Convert stream to individual lines.
 
-    Random random = new Random();
+    Random random = Random();
 
     int rint = random.nextInt(lines.length);
     globals.promptText = lines.elementAt(rint);
   }
 
   Widget _buildPopupDialog(BuildContext context) {
-    return new AlertDialog(
+    return AlertDialog(
       title: const Text('Prompt:'),
       //mainAxisSize: MainAxisSize.min,
-      content: new Column(
+      content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(globals.promptText),
         ],
       ),
       actions: <Widget>[
-        new TextButton( //changing to TextButton. FlatButton doesn't exist...
+        TextButton(
+          //changing to TextButton. FlatButton doesn't exist...
           onPressed: () {
             Navigator.of(context).pop();
           },
