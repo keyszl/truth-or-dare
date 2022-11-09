@@ -84,11 +84,11 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        new TextButton( //changing to TextButton. FlatButton doesn't exist...
           onPressed: () {
             Navigator.of(context).pop();
           },
-          textColor: Theme.of(context).primaryColor,
+          //textColor: Theme.of(context).primaryColor,
           child: const Text('Close'),
         ),
       ],
