@@ -65,13 +65,15 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
 
     int rint = random.nextInt(lines.length);
     globals.promptText = lines.elementAt(rint);
+
     //adding the received truths and dares to a global list
     if (promptType == "truth") {
       globals.truths.add(globals.promptText);
+      //print(globals.truths.removeLast());
     } else {
       globals.dares.add(globals.promptText);
     }
-    print(globals.promptText);
+    //print(globals.promptText);
     globals.contentType = promptType;
   }
 
@@ -119,7 +121,7 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
           //textColor: Theme.of(context).primaryColor,
           child: const Text('Close'),
         ),
-        _getWidget() //adds a widget at the bottom of the dialog based on truth/dare
+        //_getWidget() //adds a widget at the bottom of the dialog based on truth/dare
       ],
     );
   }
@@ -190,4 +192,3 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
     //Text(_ipaddress!, textAlign: TextAlign.center),
   }
 }
-

@@ -55,13 +55,91 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  Widget _buildPopupDialog(BuildContext context, String promptType) {
+    return AlertDialog(
+      title: const Text('Send Truth or Dare'),
+      //mainAxisSize: MainAxisSize.min,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[Text(_getPrompt(promptType))],
+      ),
+      actions: <Widget>[
+        TextButton(
+          //changing to TextButton. FlatButton doesn't exist...
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          //textColor: Theme.of(context).primaryColor,
+          child: const Text('Close'),
+        ),
+        _getWidget(
+            promptType) //adds a widget at the bottom of the dialog based on truth/dare
+      ],
+    );
+  }
+
+  _getWidget(String string) {
+    if (string == "truth") {
+      return const TextField(
+        key: Key("TruthText"),
+        decoration: InputDecoration(hintText: "Type your Truth Here"),
+      );
+    } else {
+      return Row(children: <Widget>[
+        TextButton(
+            key: Key("DidDareButton"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("I did my dare")),
+        TextButton(
+            key: Key("DidNotDoDareButton"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("I didn't do my dare"))
+      ]);
+    }
+  }
+
+  _getPrompt(String promptType) {
+    if (promptType == "truth") {
+      try {
+        return globals.truths.removeLast();
+      } catch (e) {
+        Navigator.pop(context);
+      } //thows error if there are no more truths
+    } else {
+      return globals.dares
+          .removeLast(); //thows error if there are no more dares
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.friend!.name),
-        actions: [ElevatedButton(onPressed: (){}, child: Text("Did my dare")),
-        ElevatedButton(onPressed: (){}, child: Text("My truth"))],
+        actions: [
+          ElevatedButton(
+              key: Key("SendDareButton"),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        _buildPopupDialog(context, "dare"));
+              },
+              child: Text("Send Dare")),
+          ElevatedButton(
+              key: Key("SendTruthButton"),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        _buildPopupDialog(context, "truth"));
+              },
+              child: Text("Send Truth"))
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
