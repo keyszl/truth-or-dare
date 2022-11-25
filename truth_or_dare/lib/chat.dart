@@ -5,6 +5,8 @@ import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'friends_data.dart';
+import 'globals.dart' as globals;
+import 'firstscreen.dart' as firstscreen;
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.friend});
@@ -57,7 +59,9 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chat with " + widget.friend!.name),
+        title: Text(widget.friend!.name),
+        actions: [ElevatedButton(onPressed: (){}, child: Text("Did my dare")),
+        ElevatedButton(onPressed: (){}, child: Text("My truth"))],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
