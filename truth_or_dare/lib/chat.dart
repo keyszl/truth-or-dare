@@ -89,13 +89,13 @@ class _ChatScreenState extends State<ChatScreen> {
         TextButton(
             key: Key("DidDareButton"),
             onPressed: () {
-              Navigator.pop(context);
+              send("I did my dare: ${_getPrompt("dare")}.");
             },
             child: Text("I did my dare")),
         TextButton(
             key: Key("DidNotDoDareButton"),
             onPressed: () {
-              Navigator.pop(context);
+              send("I didn't do my dare. ${_getPrompt("dare")} I suck :(");
             },
             child: Text("I didn't do my dare"))
       ]);
