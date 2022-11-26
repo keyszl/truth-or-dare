@@ -19,6 +19,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String? imagePath;
+  TextEditingController _truthEditingController = TextEditingController();
 
   void initState() {
     super.initState();
@@ -78,40 +79,66 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  String truth = "";
   _getWidget(String string) {
     if (string == "truth") {
-      return const TextField(
-        key: Key("TruthText"),
-        decoration: InputDecoration(hintText: "Type your Truth Here"),
-      );
+      return Column(children: <Widget>[
+        TextField(
+          key: Key("TruthText"),
+          decoration: InputDecoration(label: Text("Type your Truth Here")),
+          onChanged: (String value) {
+            truth = value;
+            print(truth);
+          },
+          controller: _truthEditingController,
+        ),
+        ValueListenableBuilder<TextEditingValue>(
+            valueListenable: _truthEditingController,
+            builder: (context, value, child) {
+              return TextButton(
+                  key: Key("truthSendButton"),
+                  onPressed: value.text.isNotEmpty
+                      ? () {
+                          send(
+                              "My truth for ${_getPromptSend("truth")} is:\n ${value.text}");
+                          Navigator.pop(context);
+                        }
+                      : null,
+                  child: Icon(Icons.send));
+            })
+      ]);
     } else {
       return Row(children: <Widget>[
         TextButton(
             key: Key("DidDareButton"),
             onPressed: () {
-              send("I did my dare: ${_getPrompt("dare")}.");
+              send("I did my dare: ${_getPromptSend("dare")}.");
+              Navigator.pop(context);
             },
             child: Text("I did my dare")),
         TextButton(
             key: Key("DidNotDoDareButton"),
             onPressed: () {
-              send("I didn't do my dare. ${_getPrompt("dare")} I suck :(");
+              send("I didn't do my dare. ${_getPromptSend("dare")} I suck :(");
+              Navigator.pop(context);
             },
             child: Text("I didn't do my dare"))
       ]);
     }
   }
 
-  _getPrompt(String promptType) {
+_getPrompt(String promptType) {
     if (promptType == "truth") {
-      try {
-        return globals.truths.removeLast();
-      } catch (e) {
-        Navigator.pop(context);
-      } //thows error if there are no more truths
+      return globals.truths.last; //thows error if there are no more truths
     } else {
-      return globals.dares
-          .removeLast(); //thows error if there are no more dares
+      return globals.dares.last; //thows error if there are no more dares
+    }
+  }
+  _getPromptSend(String promptType) {
+    if (promptType == "truth") {
+      return globals.truths.removeLast(); //thows error if there are no more truths
+    } else {
+      return globals.dares.removeLast(); //thows error if there are no more dares
     }
   }
 

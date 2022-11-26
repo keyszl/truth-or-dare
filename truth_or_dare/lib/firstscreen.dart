@@ -62,11 +62,10 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
     //print(lines);
 
     Random random = Random();
-
     int rint = random.nextInt(lines.length);
     globals.promptText = lines.elementAt(rint);
 
-    //adding the received truths and dares to a global list
+    //adding the received truths and dares to a global list for sending
     if (promptType == "truth") {
       globals.truths.add(globals.promptText);
       //print(globals.truths.removeLast());
