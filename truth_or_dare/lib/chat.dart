@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'friends_data.dart';
 import 'globals.dart' as globals;
-import 'firstscreen.dart' as firstscreen;
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.friend});
@@ -19,7 +18,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String? imagePath;
-  TextEditingController _truthEditingController = TextEditingController();
+  final TextEditingController _truthEditingController = TextEditingController();
 
   void initState() {
     super.initState();
@@ -69,6 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
           //changing to TextButton. FlatButton doesn't exist...
           onPressed: () {
             Navigator.of(context).pop();
+            _truthEditingController.clear();
           },
           //textColor: Theme.of(context).primaryColor,
           child: const Text('Close'),
@@ -84,8 +84,8 @@ class _ChatScreenState extends State<ChatScreen> {
     if (string == "truth") {
       return Column(children: <Widget>[
         TextField(
-          key: Key("TruthText"),
-          decoration: InputDecoration(label: Text("Type your Truth Here")),
+          key: const Key("TruthText"),
+          decoration: const InputDecoration(label: Text("Type your Truth Here")),
           onChanged: (String value) {
             truth = value;
             print(truth);
@@ -96,49 +96,53 @@ class _ChatScreenState extends State<ChatScreen> {
             valueListenable: _truthEditingController,
             builder: (context, value, child) {
               return TextButton(
-                  key: Key("truthSendButton"),
+                  key: const Key("truthSendButton"),
                   onPressed: value.text.isNotEmpty
                       ? () {
                           send(
                               "My truth for ${_getPromptSend("truth")} is:\n ${value.text}");
                           Navigator.pop(context);
+                          _truthEditingController.clear();
                         }
                       : null,
-                  child: Icon(Icons.send));
+                  child: const Icon(Icons.send));
             })
       ]);
     } else {
       return Row(children: <Widget>[
         TextButton(
-            key: Key("DidDareButton"),
+            key: const Key("DidDareButton"),
             onPressed: () {
               send("I did my dare: ${_getPromptSend("dare")}.");
               Navigator.pop(context);
             },
-            child: Text("I did my dare")),
+            child: const Text("I did my dare")),
         TextButton(
-            key: Key("DidNotDoDareButton"),
+            key: const Key("DidNotDoDareButton"),
             onPressed: () {
               send("I didn't do my dare. ${_getPromptSend("dare")} I suck :(");
               Navigator.pop(context);
             },
-            child: Text("I didn't do my dare"))
+            child: const Text("I didn't do my dare"))
       ]);
     }
   }
 
-_getPrompt(String promptType) {
+  _getPrompt(String promptType) {
     if (promptType == "truth") {
       return globals.truths.last; //thows error if there are no more truths
     } else {
       return globals.dares.last; //thows error if there are no more dares
     }
   }
+
   _getPromptSend(String promptType) {
     if (promptType == "truth") {
-      return globals.truths.removeLast(); //thows error if there are no more truths
+      return globals.truths
+          .removeLast(); //thows error if there are no more truths
     } else {
-      return globals.dares.removeLast(); //thows error if there are no more dares
+      return globals.dares
+          .removeLast(); //thows error if there are no more dares
     }
   }
 
@@ -149,23 +153,23 @@ _getPrompt(String promptType) {
         title: Text(widget.friend!.name),
         actions: [
           ElevatedButton(
-              key: Key("SendDareButton"),
+              key: const Key("SendDareButton"),
               onPressed: () {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) =>
                         _buildPopupDialog(context, "dare"));
               },
-              child: Text("Send Dare")),
+              child: const Text("Send Dare")),
           ElevatedButton(
-              key: Key("SendTruthButton"),
+              key: const Key("SendTruthButton"),
               onPressed: () {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) =>
                         _buildPopupDialog(context, "truth"));
               },
-              child: Text("Send Truth"))
+              child: const Text("Send Truth"))
         ],
       ),
       body: Column(
