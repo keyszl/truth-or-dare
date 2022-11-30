@@ -10,6 +10,9 @@ import 'dart:convert';
 import 'package:network_info_plus/network_info_plus.dart';
 
 import 'package:truth_or_dare/friends_data.dart';
+import 'package:truth_or_dare/main.dart';
+import 'package:truth_or_dare/secondscreen.dart';
+import 'chat.dart';
 import 'globals.dart' as globals;
 import 'package:path/path.dart' as p;
 import 'dart:async' show Future;
@@ -24,10 +27,18 @@ Future<String> loadAssetDares() async {
 }
 
 class TruthDareScreen extends StatefulWidget {
-  TruthDareScreen({super.key, required this.friends, required this.ipAddr});
+  TruthDareScreen({
+    super.key,
+    required this.friends,
+    required this.ipAddr,
+    this.friend,
+    //this.friend,
+  });
 
   Friends? friends;
   String? ipAddr;
+  Friend? friend;
+  //final Friend? friend;
 
   @override
   _TruthDareScreenState createState() => _TruthDareScreenState();
@@ -36,6 +47,7 @@ class TruthDareScreen extends StatefulWidget {
 class _TruthDareScreenState extends State<TruthDareScreen> {
   late Friends _friends;
   late String _ipAddr;
+  late Friend friend;
 
   void initState() {
     _friends = widget.friends!;
@@ -73,7 +85,17 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
     globals.promptText = lines.elementAt(rint);
   }
 
+  Future<void> send(String msg) async {
+    await widget.friend!.send(msg).catchError((e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Error: $e"),
+      ));
+    });
+  }
+
+  @override
   Widget _buildPopupDialog(BuildContext context) {
+    // ignore: unnecessary_new
     return new AlertDialog(
       title: const Text('Prompt:'),
       //mainAxisSize: MainAxisSize.min,
@@ -84,13 +106,11 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          textColor: Theme.of(context).primaryColor,
-          child: const Text('Close'),
-        ),
+        TextButton(
+            onPressed: () {
+              send(Text(globals.promptText).toString());
+            },
+            child: Text(_friends.last.toString())),
       ],
     );
   }
