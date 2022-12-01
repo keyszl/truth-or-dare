@@ -44,7 +44,8 @@ class _MainScreenState extends State<MainScreen> {
     _setupServer();
     _findIPAddress();
     String ipa = NetworkInfo().getWifiIP().toString();
-    friend = Friend(ipAddr: ipa, name: "");
+    friend = Friend(ipAddr: "", name: "Me");
+    print(ipa);
     pages = [
       TruthDareScreen(
         friends: _friends,
