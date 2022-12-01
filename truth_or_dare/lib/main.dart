@@ -28,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   String? _ipaddress = "Loading...";
   late StreamSubscription<Socket> server_sub;
   late Friends _friends;
+  late Friend friend;
   late List<DropdownMenuItem<String>> _friendList;
   late TextEditingController _nameController, _ipController;
   int selectedIndex = 0;
@@ -42,10 +43,14 @@ class _MainScreenState extends State<MainScreen> {
     _ipController = TextEditingController();
     _setupServer();
     _findIPAddress();
+    String ipa = NetworkInfo().getWifiIP().toString();
+    friend = Friend(ipAddr: "", name: "Me");
+    print(ipa);
     pages = [
       TruthDareScreen(
         friends: _friends,
         ipAddr: _ipaddress,
+        friend: friend,
       ),
       ContactsScreen(friends: _friends)
     ];

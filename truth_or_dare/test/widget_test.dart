@@ -33,7 +33,7 @@ void main() {
   testWidgets('Truth button and display of truth dialogue', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: MainScreen()));
     expect(find.byKey(const Key('TruthButton')), findsNWidgets(1));
-    //await tester.tap(find.byKey(Key('TruthButton')));
+    await tester.tap(find.byKey(Key('TruthButton')));
     //await tester.pump();
     //await tester.pump();
     //expect(find.byType(ContactsScreen), findsOneWidget);

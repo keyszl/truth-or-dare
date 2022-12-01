@@ -10,6 +10,9 @@ import 'dart:convert';
 import 'package:network_info_plus/network_info_plus.dart';
 
 import 'package:truth_or_dare/friends_data.dart';
+import 'package:truth_or_dare/main.dart';
+import 'package:truth_or_dare/secondscreen.dart';
+import 'chat.dart';
 import 'globals.dart' as globals;
 import 'package:path/path.dart' as p;
 import 'dart:async' show Future;
@@ -24,10 +27,18 @@ Future<String> loadAssetDares() async {
 }
 
 class TruthDareScreen extends StatefulWidget {
-  TruthDareScreen({super.key, required this.friends, required this.ipAddr});
+  TruthDareScreen({
+    super.key,
+    required this.friends,
+    required this.ipAddr,
+    this.friend,
+    //this.friend,
+  });
 
   Friends? friends;
   String? ipAddr;
+  Friend? friend;
+  //final Friend? friend;
 
   @override
   _TruthDareScreenState createState() => _TruthDareScreenState();
@@ -36,6 +47,7 @@ class TruthDareScreen extends StatefulWidget {
 class _TruthDareScreenState extends State<TruthDareScreen> {
   late Friends _friends;
   late String _ipAddr;
+  late Friend friend;
 
   void initState() {
     _friends = widget.friends!;
@@ -67,43 +79,28 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
     //.transform(utf8.decoder) // Decode bytes to UTF-8.
     //.transform(LineSplitter()); // Convert stream to individual lines.
 
-    Random random = Random();
+    Random random = new Random();
 
     int rint = random.nextInt(lines.length);
     globals.promptText = lines.elementAt(rint);
-    globals.contentType = promptType;
   }
 
-  _getWidget() {
-    //selection of type of widget based on truth or dare
-    if (globals.contentType == "truth") {
-      return const TextField(
-        key: Key("TruthText"),
-        decoration: InputDecoration(hintText: "Type your Truth Here"),
-      );
-    } else {
-      return Row(children: <Widget>[
-        TextButton(
-            key: Key("DidDareButton"),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text("I did my dare")),
-        TextButton(
-            key: Key("DidNotDoDareButton"),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text("I didn't do my dare"))
-      ]);
-    }
+  Future<void> send(String msg) async {
+    await widget.friend!.send(msg).catchError((e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Error: $e"),
+      ));
+    });
   }
 
+  @override
   Widget _buildPopupDialog(BuildContext context) {
-    return AlertDialog(
+    widget.friend = _friends.getFriend(_friends.last)!;
+    // ignore: unnecessary_new
+    return new AlertDialog(
       title: const Text('Prompt:'),
       //mainAxisSize: MainAxisSize.min,
-      content: Column(
+      content: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(globals.promptText),
@@ -111,14 +108,11 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
       ),
       actions: <Widget>[
         TextButton(
-          //changing to TextButton. FlatButton doesn't exist...
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          //textColor: Theme.of(context).primaryColor,
-          child: const Text('Close'),
-        ),
-        _getWidget() //adds a widget at the bottom of the dialog based on truth/dare
+            onPressed: () {
+              send(Text(globals.promptText).toString());
+              Navigator.of(context).pop();
+            },
+            child: Text(_friends.last.toString())),
       ],
     );
   }
