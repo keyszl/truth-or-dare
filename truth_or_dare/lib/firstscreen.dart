@@ -95,6 +95,7 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
 
   @override
   Widget _buildPopupDialog(BuildContext context) {
+    widget.friend = _friends.getFriend(_friends.last)!;
     // ignore: unnecessary_new
     return new AlertDialog(
       title: const Text('Prompt:'),
@@ -109,6 +110,7 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
         TextButton(
             onPressed: () {
               send(Text(globals.promptText).toString());
+              Navigator.of(context).pop();
             },
             child: Text(_friends.last.toString())),
       ],
