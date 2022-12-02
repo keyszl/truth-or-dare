@@ -3,16 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:convert';
-
-import 'package:network_info_plus/network_info_plus.dart';
 
 import 'package:truth_or_dare/friends_data.dart';
 import 'package:truth_or_dare/chat.dart';
 import 'globals.dart' as globals;
-import 'package:path/path.dart' as p;
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -24,6 +18,7 @@ Future<String> loadAssetDares() async {
   return await rootBundle.loadString('assets/dares.txt');
 }
 
+// ignore: must_be_immutable
 class TruthDareScreen extends StatefulWidget {
   TruthDareScreen({super.key, required this.friends, required this.ipAddr});
 
@@ -31,10 +26,10 @@ class TruthDareScreen extends StatefulWidget {
   String? ipAddr;
 
   @override
-  _TruthDareScreenState createState() => _TruthDareScreenState();
+  TruthDareScreenState createState() => TruthDareScreenState();
 }
 
-class _TruthDareScreenState extends State<TruthDareScreen> {
+class TruthDareScreenState extends State<TruthDareScreen> {
   late Friends _friends;
   late String _ipAddr;
 
@@ -84,19 +79,19 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
         decoration: InputDecoration(hintText: "Type your Truth Here"),
       );
     } else {
-      return Row(children: <Widget>[
+      return Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
         TextButton(
-            key: Key("DidDareButton"),
+            key: const Key("DidDareButton"),
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("I did my dare")),
+            child: const Text("I did my dare")),
         TextButton(
-            key: Key("DidNotDoDareButton"),
+            key: const Key("DidNotDoDareButton"),
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("I didn't do my dare"))
+            child: const Text("I didn't do my dare"))
       ]);
     }
   }
@@ -139,12 +134,11 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
             // TRUTH BUTTON
             key: const Key("TruthButton"),
             style: TextButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 175, 219, 237),
+              backgroundColor: const Color.fromARGB(255, 175, 219, 237),
               padding: const EdgeInsets.all(16.0),
               textStyle: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
               ),
             ),
             onPressed: () {
@@ -166,13 +160,10 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
             //DARE BUTTON
             key: const Key("DareButton"),
             style: TextButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 175, 219, 237),
+              backgroundColor: const Color.fromARGB(255, 175, 219, 237),
               padding: const EdgeInsets.all(16.0),
-              textStyle: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+              textStyle:
+                  const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             onPressed: () {
               // do something
