@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:truth_or_dare/firstscreen.dart';
 import 'package:truth_or_dare/secondscreen.dart';
@@ -21,12 +23,12 @@ class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  MainScreenState createState() => MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class MainScreenState extends State<MainScreen> {
   String? _ipaddress = "Loading...";
-  late StreamSubscription<Socket> server_sub;
+  late StreamSubscription<Socket> serverSub;
   late Friends _friends;
   late List<DropdownMenuItem<String>> _friendList;
   late TextEditingController _nameController, _ipController;
@@ -57,8 +59,9 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  @override
   void dispose() {
-    server_sub.cancel();
+    serverSub.cancel();
     super.dispose();
   }
 
@@ -66,7 +69,7 @@ class _MainScreenState extends State<MainScreen> {
     // Thank you https://stackoverflow.com/questions/52411168/how-to-get-device-ip-in-dart-flutter
     String? ip = await NetworkInfo().getWifiIP();
     setState(() {
-      _ipaddress = "My IP: " + ip!;
+      _ipaddress = "My IP: $ip!";
     });
   }
 
@@ -74,7 +77,7 @@ class _MainScreenState extends State<MainScreen> {
     try {
       ServerSocket server =
           await ServerSocket.bind(InternetAddress.anyIPv4, ourPort);
-      server_sub = server.listen(_listenToSocket); // StreamSubscription<Socket>
+      serverSub = server.listen(_listenToSocket); // StreamSubscription<Socket>
     } on SocketException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Error: $e"),
@@ -92,7 +95,7 @@ class _MainScreenState extends State<MainScreen> {
 
   void _handleIncomingMessage(String ip, Uint8List incomingData) {
     String received = String.fromCharCodes(incomingData);
-    print("Received '$received' from '$ip'");
+    print("Received $received from $ip");
     _friends.receiveFrom(ip, received);
   }
 
@@ -103,7 +106,8 @@ class _MainScreenState extends State<MainScreen> {
           backgroundColor: Colors.lightBlue[190],
           title: const Text(
             "TRUTH OR DARE",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 28),
           ),
         ),
         body: pages.elementAt(selectedIndex),
@@ -128,6 +132,6 @@ class _MainScreenState extends State<MainScreen> {
             onTap: onItemTapped,
             selectedLabelStyle: TextStyle(color: Colors.pink[50], fontSize: 14),
             unselectedLabelStyle:
-                TextStyle(fontSize: 14, color: Colors.black)));
+                const TextStyle(fontSize: 14, color: Colors.black)));
   }
 }
