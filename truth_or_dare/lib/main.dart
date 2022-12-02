@@ -103,11 +103,28 @@ class MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.lightBlue[190],
-          title: const Text(
-            "TRUTH OR DARE",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 28),
+          backgroundColor: Colors.black,
+          title: RichText(
+            text: const TextSpan(children: [
+              TextSpan(
+                  text: "TRUTH",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 98, 190, 233),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold)),
+              TextSpan(
+                  text: " OR ",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold)),
+              TextSpan(
+                  text: "DARE",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 255, 17, 0),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold))
+            ]),
           ),
         ),
         body: pages.elementAt(selectedIndex),
