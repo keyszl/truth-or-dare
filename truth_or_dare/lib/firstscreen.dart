@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'package:network_info_plus/network_info_plus.dart';
 
 import 'package:truth_or_dare/friends_data.dart';
+import 'package:truth_or_dare/chat.dart';
 import 'globals.dart' as globals;
 import 'package:path/path.dart' as p;
 import 'dart:async' show Future;
@@ -58,24 +59,25 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
       contents = await loadAssetDares();
     }
     var lines = contents.split(',');
-    print(lines[0]);
-
-    //File file = File(filePath);
-
-    //Stream<String> lines = file
-    //  .openRead()
-    //.transform(utf8.decoder) // Decode bytes to UTF-8.
-    //.transform(LineSplitter()); // Convert stream to individual lines.
+    //print(lines);
 
     Random random = Random();
-
     int rint = random.nextInt(lines.length);
     globals.promptText = lines.elementAt(rint);
+
+    //adding the received truths and dares to a global list for sending
+    if (promptType == "truth") {
+      globals.truths.add(globals.promptText);
+      //print(globals.truths.removeLast());
+    } else {
+      globals.dares.add(globals.promptText);
+    }
+    //print(globals.promptText);
     globals.contentType = promptType;
   }
 
+//selection of type of widget based on truth or dare
   _getWidget() {
-    //selection of type of widget based on truth or dare
     if (globals.contentType == "truth") {
       return const TextField(
         key: Key("TruthText"),
@@ -118,7 +120,7 @@ class _TruthDareScreenState extends State<TruthDareScreen> {
           //textColor: Theme.of(context).primaryColor,
           child: const Text('Close'),
         ),
-        _getWidget() //adds a widget at the bottom of the dialog based on truth/dare
+        //_getWidget() //adds a widget at the bottom of the dialog based on truth/dare
       ],
     );
   }
