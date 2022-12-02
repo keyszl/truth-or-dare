@@ -19,7 +19,7 @@ class ActionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: this.width,
+        width: width,
         child: TextField(
           controller: controller,
           keyboardType: inType,

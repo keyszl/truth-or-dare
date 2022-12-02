@@ -5,20 +5,21 @@ import 'package:truth_or_dare/text_widgets.dart';
 import 'package:truth_or_dare/chat.dart';
 import 'package:truth_or_dare/list_items.dart';
 
+// ignore: must_be_immutable
 class ContactsScreen extends StatefulWidget {
   ContactsScreen({super.key, required this.friends});
 
   Friends? friends;
 
-  _ContactsScreenState createState() => _ContactsScreenState();
+  @override
+  ContactsScreenState createState() => ContactsScreenState();
 }
 
-class _ContactsScreenState extends State<ContactsScreen> {
-  String? _ipaddress = "Loading...";
+class ContactsScreenState extends State<ContactsScreen> {
   late Friends _friends;
-  late List<DropdownMenuItem<String>> _friendList;
   late TextEditingController _nameController, _ipController;
 
+  @override
   void initState() {
     super.initState();
     _friends = widget.friends!;
@@ -27,7 +28,6 @@ class _ContactsScreenState extends State<ContactsScreen> {
   }
 
   Future<void> _handleChat(Friend friend) async {
-    print("Chat");
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ChatScreen(friend: friend),
